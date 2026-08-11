@@ -1,0 +1,1558 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Subnetting Master • MC88 | Network Engineering Suite</title>
+  
+  <!-- Premium Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <style>
+    /* ============================================================
+       CYBER-LUXURY / OBSIDIAN & NEON AMETHYST DESIGN SYSTEM
+       Subnetting Master by MC88 — Awwwards-Level UI
+       ============================================================ */
+    
+    :root {
+      /* Core Obsidian Palette */
+      --bg-abyss: #050508;
+      --bg-obsidian: #0a0a10;
+      --bg-charcoal: #0f0f18;
+      --bg-surface: rgba(15, 15, 24, 0.7);
+      --bg-glass: rgba(18, 18, 28, 0.55);
+      --bg-elevated: rgba(22, 22, 35, 0.8);
+      
+      /* Neon Amethyst Accents */
+      --amethyst-400: #a78bfa;
+      --amethyst-500: #8b5cf6;
+      --amethyst-600: #7c3aed;
+      --amethyst-glow: rgba(139, 92, 246, 0.5);
+      --violet-400: #c084fc;
+      --violet-500: #a855f7;
+      --magenta-400: #e879f9;
+      --magenta-glow: rgba(232, 121, 249, 0.4);
+      
+      /* Functional Accents */
+      --cyan-400: #22d3ee;
+      --emerald-400: #34d399;
+      --rose-400: #fb7185;
+      --amber-400: #fbbf24;
+      
+      /* Text Hierarchy */
+      --text-primary: #f1f0f7;
+      --text-secondary: #c5c2d8;
+      --text-tertiary: #8a86a3;
+      --text-muted: #5c5878;
+      
+      /* Borders & Glows */
+      --border-subtle: rgba(139, 92, 246, 0.15);
+      --border-glow: rgba(168, 85, 247, 0.35);
+      --border-bright: rgba(192, 132, 252, 0.5);
+      --glow-sm: 0 0 12px rgba(139, 92, 246, 0.3);
+      --glow-md: 0 0 24px rgba(168, 85, 247, 0.4);
+      --glow-lg: 0 0 40px rgba(192, 132, 252, 0.35);
+      --glow-magenta: 0 0 20px rgba(232, 121, 249, 0.35);
+      
+      /* Spacing & Radius */
+      --radius-xs: 6px;
+      --radius-sm: 10px;
+      --radius-md: 16px;
+      --radius-lg: 22px;
+      --radius-xl: 28px;
+      --radius-full: 9999px;
+      
+      /* Typography */
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+      
+      /* Transitions */
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --duration-fast: 180ms;
+      --duration-normal: 280ms;
+      --duration-slow: 400ms;
+      
+      /* Scrollbar */
+      --scrollbar-track: rgba(139, 92, 246, 0.05);
+      --scrollbar-thumb: rgba(139, 92, 246, 0.25);
+      --scrollbar-thumb-hover: rgba(139, 92, 246, 0.45);
+    }
+
+    /* ========== RESET & BASE ========== */
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg-abyss);
+      color: var(--text-primary);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      position: relative;
+      overflow-x: hidden;
+      line-height: 1.6;
+      letter-spacing: -0.01em;
+    }
+
+    /* ========== CUSTOM SCROLLBAR ========== */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--scrollbar-track);
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--scrollbar-thumb);
+      border-radius: 3px;
+      transition: background var(--duration-fast);
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--scrollbar-thumb-hover);
+    }
+    ::-webkit-scrollbar-corner {
+      background: transparent;
+    }
+
+    /* ========== CANVAS BACKGROUND ========== */
+    #particlesBg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.75;
+    }
+
+    /* ========== APP SHELL ========== */
+    .app-wrapper {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* ========== HEADER — Frosted Glass Navigation ========== */
+    .header {
+      background: rgba(10, 10, 18, 0.75);
+      backdrop-filter: blur(28px) saturate(180%);
+      -webkit-backdrop-filter: blur(28px) saturate(180%);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 32px rgba(0, 0, 0, 0.6), 0 1px 0 rgba(139, 92, 246, 0.08);
+      transition: all var(--duration-normal) var(--ease-out-expo);
+    }
+
+    /* Logo */
+    .logo-block {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      flex-shrink: 0;
+    }
+
+    .logo-hex {
+      width: 2.6rem;
+      height: 2.6rem;
+      background: linear-gradient(135deg, #7c3aed, #a855f7, #c084fc);
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 1.2rem;
+      color: #fff;
+      box-shadow: var(--glow-md), 0 0 60px rgba(168, 85, 247, 0.25);
+      animation: hexPulse 3.5s infinite ease-in-out;
+      transition: transform var(--duration-fast) var(--ease-out-back);
+    }
+
+    .logo-hex:hover {
+      transform: scale(1.08) rotate(5deg);
+    }
+
+    @keyframes hexPulse {
+      0%, 100% { 
+        box-shadow: 0 0 18px rgba(139, 92, 246, 0.5), 0 0 40px rgba(168, 85, 247, 0.2); 
+      }
+      50% { 
+        box-shadow: 0 0 32px rgba(192, 132, 252, 0.7), 0 0 65px rgba(232, 121, 249, 0.3); 
+      }
+    }
+
+    .logo-text {
+      font-weight: 800;
+      font-size: 1.25rem;
+      letter-spacing: -0.4px;
+      background: linear-gradient(135deg, #c4b5fd, #a78bfa, #818cf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      user-select: none;
+    }
+
+    .logo-text span {
+      font-weight: 500;
+      font-size: 0.68rem;
+      background: linear-gradient(135deg, #e879f9, #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-left: 0.2rem;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+    }
+
+    /* Navigation Pills */
+    .nav-pills {
+      display: flex;
+      gap: 0.25rem;
+      background: rgba(20, 18, 35, 0.6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: var(--radius-full);
+      padding: 0.25rem;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .nav-pill {
+      padding: 0.5rem 1.2rem;
+      border-radius: var(--radius-full);
+      font-weight: 600;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: all var(--duration-fast) var(--ease-out-expo);
+      font-family: var(--font-sans);
+      letter-spacing: 0.15px;
+      white-space: nowrap;
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .nav-pill i {
+      font-size: 0.7rem;
+      opacity: 0.7;
+      transition: opacity var(--duration-fast);
+    }
+
+    .nav-pill:hover {
+      color: #fff;
+      background: rgba(139, 92, 246, 0.12);
+    }
+
+    .nav-pill:hover i {
+      opacity: 1;
+    }
+
+    .nav-pill.active {
+      background: linear-gradient(135deg, #6d28d9, #7c3aed, #8b5cf6);
+      color: #fff;
+      box-shadow: var(--glow-sm), 0 4px 16px rgba(124, 58, 237, 0.4);
+    }
+
+    .nav-pill.active i {
+      opacity: 1;
+      color: #c4b5fd;
+    }
+
+    /* GitHub Button */
+    .gh-icon-btn {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      background: rgba(20, 18, 35, 0.5);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all var(--duration-fast) var(--ease-out-expo);
+      flex-shrink: 0;
+    }
+
+    .gh-icon-btn:hover {
+      color: #c084fc;
+      border-color: var(--border-bright);
+      box-shadow: var(--glow-magenta);
+      transform: translateY(-2px);
+    }
+
+    /* ========== MAIN LAYOUT ========== */
+    .main-content {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 1.8rem;
+      padding: 1.8rem 2rem;
+      flex: 1;
+      max-width: 1440px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .center-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 1.8rem;
+      min-width: 0;
+    }
+
+    /* ========== GLASS CARDS ========== */
+    .glass-card {
+      background: var(--bg-glass);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.8rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 1px 0 rgba(139, 92, 246, 0.06);
+      transition: all var(--duration-normal) var(--ease-out-expo);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(192, 132, 252, 0.3), transparent);
+      opacity: 0;
+      transition: opacity var(--duration-slow);
+    }
+
+    .glass-card:hover::before {
+      opacity: 1;
+    }
+
+    .glass-card.highlight {
+      border-color: var(--border-glow);
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6), var(--glow-sm);
+    }
+
+    .glass-card.highlight::before {
+      opacity: 1;
+      background: linear-gradient(90deg, transparent, rgba(168, 85, 247, 0.5), rgba(232, 121, 249, 0.4), transparent);
+    }
+
+    /* Card Header */
+    .card-title {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.85rem;
+      border-bottom: 1px solid rgba(139, 92, 246, 0.1);
+    }
+
+    .card-title i {
+      color: #a78bfa;
+      font-size: 1.1rem;
+      filter: drop-shadow(0 0 6px rgba(167, 139, 250, 0.5));
+    }
+
+    .card-title h3 {
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: #e2dff0;
+      letter-spacing: -0.2px;
+    }
+
+    /* ========== INPUT FIELDS ========== */
+    .input-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      margin-bottom: 1rem;
+      align-items: center;
+    }
+
+    .field {
+      background: rgba(15, 12, 28, 0.7);
+      border: 1px solid rgba(139, 92, 246, 0.2);
+      border-radius: var(--radius-full);
+      padding: 0.7rem 1.15rem;
+      color: var(--text-primary);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 500;
+      outline: none;
+      transition: all var(--duration-fast) var(--ease-out-expo);
+      flex: 1 1 140px;
+      min-width: 100px;
+    }
+
+    .field::placeholder {
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    .field:focus {
+      border-color: #a855f7;
+      box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.12), var(--glow-sm);
+      background: rgba(18, 14, 32, 0.85);
+    }
+
+    /* ========== BUTTONS ========== */
+    .btn-go {
+      background: linear-gradient(135deg, #6d28d9, #7c3aed, #8b5cf6);
+      border: none;
+      color: #fff;
+      font-weight: 700;
+      padding: 0.7rem 1.6rem;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: all var(--duration-fast) var(--ease-out-back);
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      box-shadow: 0 6px 20px rgba(109, 40, 217, 0.4), var(--glow-sm);
+      letter-spacing: 0.2px;
+      position: relative;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .btn-go::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.5s, height 0.5s;
+    }
+
+    .btn-go:active::after {
+      width: 300px;
+      height: 300px;
+    }
+
+    .btn-go:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(139, 92, 246, 0.55), var(--glow-md);
+    }
+
+    .btn-go:active {
+      transform: translateY(0);
+      box-shadow: 0 4px 12px rgba(109, 40, 217, 0.3);
+    }
+
+    /* ========== TABLES ========== */
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(139, 92, 246, 0.12);
+      scrollbar-width: thin;
+      scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--font-mono);
+      font-size: 0.73rem;
+      min-width: 600px;
+      background: rgba(10, 8, 20, 0.4);
+    }
+
+    thead th {
+      background: rgba(20, 16, 40, 0.8);
+      color: #c4b5fd;
+      padding: 0.75rem 0.9rem;
+      font-weight: 600;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      text-align: left;
+      border-bottom: 2px solid rgba(139, 92, 246, 0.3);
+      white-space: nowrap;
+      position: sticky;
+      top: 0;
+    }
+
+    tbody td {
+      padding: 0.65rem 0.9rem;
+      border-bottom: 1px solid rgba(139, 92, 246, 0.06);
+      color: var(--text-secondary);
+      white-space: nowrap;
+      transition: background var(--duration-fast);
+    }
+
+    tbody tr {
+      transition: all var(--duration-fast);
+    }
+
+    tbody tr:hover td {
+      background: rgba(139, 92, 246, 0.04);
+      color: var(--text-primary);
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Copy Chip */
+    .copy-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.2rem;
+      background: rgba(109, 40, 217, 0.2);
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      border-radius: var(--radius-full);
+      padding: 0.15rem 0.55rem;
+      margin-left: 0.35rem;
+      font-size: 0.62rem;
+      cursor: pointer;
+      color: #c4b5fd;
+      transition: all var(--duration-fast) var(--ease-out-expo);
+      font-family: var(--font-sans);
+      font-weight: 600;
+      user-select: none;
+    }
+
+    .copy-chip:hover {
+      background: rgba(139, 92, 246, 0.35);
+      border-color: #c084fc;
+      color: #fff;
+      box-shadow: var(--glow-sm);
+      transform: translateY(-1px);
+    }
+
+    .copy-chip:active {
+      transform: scale(0.95);
+    }
+
+    /* ========== SIDEBAR ========== */
+    .sidebar-panel {
+      background: var(--bg-glass);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.4rem;
+      height: fit-content;
+      position: sticky;
+      top: 5.5rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    }
+
+    .sidebar-panel h4 {
+      color: #c4b5fd;
+      margin-bottom: 0.8rem;
+      font-weight: 700;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      letter-spacing: -0.1px;
+    }
+
+    .sidebar-panel h4 i {
+      color: #a78bfa;
+    }
+
+    /* History items */
+    .history-item {
+      padding: 0.55rem 0.7rem;
+      background: rgba(139, 92, 246, 0.04);
+      border-left: 2px solid #7c3aed;
+      margin-bottom: 0.35rem;
+      border-radius: 0 var(--radius-xs) var(--radius-xs) 0;
+      font-size: 0.72rem;
+      font-family: var(--font-mono);
+      color: var(--text-secondary);
+      transition: all var(--duration-fast);
+      word-break: break-all;
+      cursor: default;
+    }
+
+    .history-item:hover {
+      background: rgba(139, 92, 246, 0.1);
+      border-left-color: #c084fc;
+      color: var(--text-primary);
+    }
+
+    .history-empty {
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      text-align: center;
+      padding: 1.5rem 0;
+      font-style: italic;
+    }
+
+    /* ========== MINI TOOLS ========== */
+    .mini-tools {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 1rem;
+    }
+
+    .mini-card {
+      background: var(--bg-glass);
+      backdrop-filter: blur(16px) saturate(140%);
+      -webkit-backdrop-filter: blur(16px) saturate(140%);
+      border: 1px solid rgba(139, 92, 246, 0.12);
+      border-radius: var(--radius-md);
+      padding: 1.2rem;
+      transition: all var(--duration-normal) var(--ease-out-expo);
+    }
+
+    .mini-card:hover {
+      border-color: var(--border-glow);
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4), var(--glow-sm);
+      transform: translateY(-2px);
+    }
+
+    .mini-card h5 {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #c4b5fd;
+      margin-bottom: 0.7rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      letter-spacing: -0.1px;
+    }
+
+    .mini-card h5 i {
+      color: #a78bfa;
+      font-size: 0.7rem;
+    }
+
+    .mini-card .result-text {
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      color: #a78bfa;
+      margin-top: 0.5rem;
+      padding: 0.4rem 0.6rem;
+      background: rgba(139, 92, 246, 0.06);
+      border-radius: var(--radius-xs);
+      min-height: 1.8rem;
+      display: flex;
+      align-items: center;
+    }
+
+    /* ========== ERROR MESSAGE ========== */
+    .error-msg {
+      color: #fb7185;
+      font-size: 0.76rem;
+      margin-top: 0.3rem;
+      margin-bottom: 0.5rem;
+      padding: 0.45rem 0.8rem;
+      background: rgba(251, 113, 133, 0.06);
+      border-radius: var(--radius-xs);
+      border-left: 3px solid #fb7185;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-weight: 500;
+    }
+
+    /* ========== FOOTER ========== */
+    .footer-bar {
+      text-align: center;
+      padding: 1.4rem;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      border-top: 1px solid rgba(139, 92, 246, 0.1);
+      margin-top: 1.5rem;
+      letter-spacing: 0.3px;
+      font-weight: 500;
+      background: rgba(10, 10, 18, 0.5);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .footer-bar a {
+      color: #a78bfa;
+      text-decoration: none;
+      transition: all var(--duration-fast);
+      font-weight: 600;
+    }
+
+    .footer-bar a:hover {
+      color: #c084fc;
+      text-shadow: 0 0 8px rgba(192, 132, 252, 0.5);
+    }
+
+    /* ========== HIDDEN PANELS ========== */
+    .hidden-panel {
+      display: none !important;
+    }
+
+    /* ========== RESPONSIVE DESIGN ========== */
+    @media (max-width: 1024px) {
+      .main-content {
+        grid-template-columns: 1fr;
+        padding: 1.2rem;
+        gap: 1.2rem;
+      }
+      
+      .sidebar-panel {
+        position: static;
+        order: 3;
+      }
+      
+      .header {
+        padding: 0.7rem 1.2rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.6rem;
+      }
+      
+      .nav-pills {
+        width: 100%;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+      
+      .nav-pill {
+        flex-shrink: 0;
+        font-size: 0.72rem;
+        padding: 0.45rem 1rem;
+      }
+      
+      .logo-text {
+        font-size: 1.1rem;
+      }
+      
+      .main-content {
+        padding: 1rem;
+      }
+      
+      .glass-card {
+        padding: 1.2rem;
+      }
+      
+      .input-row {
+        flex-direction: column;
+      }
+      
+      .field {
+        width: 100%;
+        flex: auto;
+      }
+      
+      .btn-go {
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .mini-tools {
+        grid-template-columns: 1fr;
+      }
+      
+      table {
+        font-size: 0.68rem;
+        min-width: 500px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header {
+        padding: 0.6rem 0.8rem;
+      }
+      
+      .logo-hex {
+        width: 2.2rem;
+        height: 2.2rem;
+        font-size: 1rem;
+      }
+      
+      .logo-text {
+        font-size: 0.95rem;
+      }
+      
+      .main-content {
+        padding: 0.7rem;
+        gap: 0.9rem;
+      }
+      
+      .glass-card {
+        padding: 1rem;
+        border-radius: var(--radius-md);
+      }
+      
+      .card-title h3 {
+        font-size: 0.9rem;
+      }
+      
+      .sidebar-panel {
+        padding: 1rem;
+      }
+    }
+
+    /* ========== ANIMATIONS ========== */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .glass-card {
+      animation: fadeInUp 0.5s var(--ease-out-expo) both;
+    }
+
+    .glass-card:nth-child(2) { animation-delay: 0.08s; }
+    .glass-card:nth-child(3) { animation-delay: 0.14s; }
+    .glass-card:nth-child(4) { animation-delay: 0.2s; }
+
+    /* Selection styling */
+    ::selection {
+      background: rgba(139, 92, 246, 0.35);
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <!-- Particle Canvas Background -->
+  <canvas id="particlesBg"></canvas>
+
+  <!-- Main Application Shell -->
+  <div class="app-wrapper">
+    
+    <!-- ========== HEADER ========== -->
+    <header class="header">
+      <div class="logo-block">
+        <div class="logo-hex">S</div>
+        <div class="logo-text">Subnetting Master <span>MC88</span></div>
+      </div>
+      
+      <nav>
+        <div class="nav-pills" id="mainNav">
+          <button class="nav-pill active" data-route="dashboard">
+            <i class="fas fa-sitemap"></i> VLSM
+          </button>
+          <button class="nav-pill" data-route="ipv4">
+            <i class="fas fa-server"></i> IPv4
+          </button>
+          <button class="nav-pill" data-route="ipv6">
+            <i class="fas fa-globe-americas"></i> IPv6
+          </button>
+          <button class="nav-pill" data-route="cheatsheet">
+            <i class="fas fa-book-open"></i> Cheatsheet
+          </button>
+        </div>
+      </nav>
+      
+      <button class="gh-icon-btn" title="GitHub Repository" aria-label="GitHub">
+        <i class="fab fa-github"></i>
+      </button>
+    </header>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <div class="main-content">
+      
+      <!-- Center Panel -->
+      <div class="center-panel">
+        
+        <!-- VLSM Calculator Panel -->
+        <div class="glass-card highlight" id="panel-dashboard">
+          <div class="card-title">
+            <i class="fas fa-project-diagram"></i>
+            <h3>VLSM Subnet Calculator</h3>
+          </div>
+          <div class="input-row">
+            <input type="text" id="vlsmNetwork" class="field" placeholder="Network (192.168.1.0)" value="192.168.1.0">
+            <input type="number" id="vlsmCidr" class="field" placeholder="CIDR" value="24" min="8" max="30" style="max-width:90px;">
+          </div>
+          <div class="input-row">
+            <input type="text" id="vlsmHosts" class="field" placeholder="Hosts: 50, 20, 10" value="50,20,10">
+            <button class="btn-go" id="calcVlsmBtn">
+              <i class="fas fa-calculator"></i> Calculate
+            </button>
+          </div>
+          <div id="vlsmError"></div>
+          <div class="table-wrap">
+            <table id="vlsmTable">
+              <thead>
+                <tr>
+                  <th>Subnet</th>
+                  <th>Hosts</th>
+                  <th>Network ID</th>
+                  <th>Usable Range</th>
+                  <th>Broadcast</th>
+                  <th>CIDR</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- IPv4 FLSM Panel -->
+        <div class="glass-card hidden-panel" id="panel-ipv4">
+          <div class="card-title">
+            <i class="fas fa-network-wired"></i>
+            <h3>IPv4 FLSM Subnetting</h3>
+          </div>
+          <div class="input-row">
+            <input type="text" id="flsmNetwork" class="field" placeholder="Network" value="10.0.0.0">
+            <input type="number" id="flsmCidr" class="field" placeholder="CIDR" value="16" min="8" max="30" style="max-width:90px;">
+            <input type="number" id="flsmSubnets" class="field" placeholder="Subnets needed" value="4" min="1" style="max-width:130px;">
+            <button class="btn-go" id="calcFlsmBtn">
+              <i class="fas fa-calculator"></i> Calculate
+            </button>
+          </div>
+          <div id="flsmError"></div>
+          <div class="table-wrap">
+            <table id="flsmTable">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Subnet ID</th>
+                  <th>Usable Range</th>
+                  <th>Broadcast</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- IPv6 Panel -->
+        <div class="glass-card hidden-panel" id="panel-ipv6">
+          <div class="card-title">
+            <i class="fas fa-globe"></i>
+            <h3>IPv6 Subnetting</h3>
+          </div>
+          <div class="input-row">
+            <input type="text" id="ipv6Prefix" class="field" placeholder="2001:db8::/32" value="2001:db8::/32">
+            <input type="number" id="ipv6NewPrefix" class="field" placeholder="New prefix" value="48" min="32" max="64" style="max-width:120px;">
+            <button class="btn-go" id="calcIpv6Btn">
+              <i class="fas fa-play"></i> Generate
+            </button>
+          </div>
+          <div class="table-wrap">
+            <table id="ipv6Table">
+              <thead>
+                <tr>
+                  <th>Subnet #</th>
+                  <th>Network Address</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Cheat Sheet Panel -->
+        <div class="glass-card hidden-panel" id="panel-cheatsheet">
+          <div class="card-title">
+            <i class="fas fa-table"></i>
+            <h3>CIDR Reference Cheat Sheet</h3>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>CIDR</th>
+                  <th>Subnet Mask</th>
+                  <th>Wildcard Mask</th>
+                  <th>Usable Hosts</th>
+                </tr>
+              </thead>
+              <tbody id="cheatSheetBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Quick Tools -->
+        <div class="mini-tools">
+          <div class="mini-card">
+            <h5><i class="fas fa-exchange-alt"></i> CIDR ↔ Mask Converter</h5>
+            <input type="text" id="cidrInput" class="field" placeholder="/24 or 255.255.255.0" style="width:100%;">
+            <div class="result-text" id="cidrResult">Enter a value above</div>
+          </div>
+          <div class="mini-card">
+            <h5><i class="fas fa-mask"></i> Wildcard Mask Calculator</h5>
+            <input type="text" id="wildcardInput" class="field" placeholder="Subnet mask" value="255.255.255.0" style="width:100%;">
+            <div class="result-text" id="wildcardResult">Enter subnet mask</div>
+          </div>
+        </div>
+        
+      </div>
+
+      <!-- Sidebar -->
+      <aside class="sidebar-panel">
+        <h4><i class="fas fa-history"></i> Recent Calculations</h4>
+        <div id="recentList">
+          <p class="history-empty">No calculations yet</p>
+        </div>
+      </aside>
+      
+    </div>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="footer-bar">
+      Copyright © 2026 MC88. All rights reserved | 
+      <a href="mailto:mohamed005cheikh@gmail.com">mohamed005cheikh@gmail.com</a> 
+      | by MC88
+    </footer>
+    
+  </div>
+
+  <script>
+    (function() {
+      // ============================================================
+      // DOM SELECTOR HELPER
+      // ============================================================
+      const $ = (selector) => document.querySelector(selector);
+      
+      // ============================================================
+      // LOCAL STORAGE FOR RECENT CALCULATIONS
+      // ============================================================
+      const STORAGE_KEY = 'mc88_subnet_history';
+      let history = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+
+      function saveHistory() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(history.slice(0, 8)));
+        renderHistory();
+      }
+
+      function addToHistory(entry) {
+        history.unshift(entry);
+        if (history.length > 8) history.pop();
+        saveHistory();
+      }
+
+      function renderHistory() {
+        const container = $('#recentList');
+        if (!container) return;
+        
+        if (history.length === 0) {
+          container.innerHTML = '<p class="history-empty">No calculations yet</p>';
+          return;
+        }
+        
+        container.innerHTML = history.map(function(h) {
+          return '<div class="history-item">' + h + '</div>';
+        }).join('');
+      }
+
+      // ============================================================
+      // IP ADDRESS MATH UTILITIES
+      // ============================================================
+      function ipToInt(ip) {
+        var parts = ip.split('.').map(Number);
+        if (parts.length !== 4 || parts.some(function(n) { return isNaN(n) || n < 0 || n > 255; })) {
+          return null;
+        }
+        return (parts[0] << 24) | (parts[1] << 16) | (parts[2] << 8) | parts[3];
+      }
+
+      function intToIp(int) {
+        return [
+          (int >>> 24) & 255,
+          (int >>> 16) & 255,
+          (int >>> 8) & 255,
+          int & 255
+        ].join('.');
+      }
+
+      function cidrToMask(cidr) {
+        if (cidr < 0 || cidr > 32) return null;
+        return intToIp(~(0xFFFFFFFF >>> cidr));
+      }
+
+      function maskToCidr(mask) {
+        var int = ipToInt(mask);
+        if (int === null) return null;
+        var cidr = 0;
+        var bit = 0x80000000;
+        while (bit && (int & bit)) {
+          cidr++;
+          bit >>>= 1;
+        }
+        return cidr;
+      }
+
+      function getNetworkAddress(ipInt, cidr) {
+        return ipInt & (~(0xFFFFFFFF >>> cidr));
+      }
+
+      function getBroadcastAddress(networkInt, cidr) {
+        return networkInt | (~(~(0xFFFFFFFF >>> cidr)) >>> 0);
+      }
+
+      // ============================================================
+      // VLSM CALCULATOR
+      // ============================================================
+      function calculateVLSM(baseIP, baseCIDR, hostRequests) {
+        var ip = ipToInt(baseIP);
+        if (!ip) throw new Error('Invalid network address');
+        if (baseCIDR < 8 || baseCIDR > 30) throw new Error('CIDR must be between 8 and 30');
+
+        var sorted = hostRequests.map(function(h, i) {
+          return { name: 'Subnet ' + (i + 1), hosts: h };
+        }).sort(function(a, b) {
+          return b.hosts - a.hosts;
+        });
+
+        var results = [];
+        var current = getNetworkAddress(ip, baseCIDR);
+        var maxAddr = getBroadcastAddress(current, baseCIDR);
+
+        for (var i = 0; i < sorted.length; i++) {
+          var req = sorted[i];
+          var needed = req.hosts + 2;
+          var bits = Math.ceil(Math.log2(needed));
+          if (bits < 1) bits = 1;
+          var newCIDR = 32 - bits;
+          
+          if (newCIDR < baseCIDR) {
+            throw new Error('Cannot fit ' + req.hosts + ' hosts in /' + baseCIDR);
+          }
+
+          var mask = ~(0xFFFFFFFF >>> newCIDR) >>> 0;
+          var subnetId = current & mask;
+          var broadcast = subnetId | (~mask >>> 0);
+          
+          if (broadcast > maxAddr) {
+            throw new Error('Exceeded base network boundary');
+          }
+
+          results.push({
+            name: req.name,
+            hosts: req.hosts,
+            subnet: intToIp(subnetId),
+            range: intToIp(subnetId + 1) + ' - ' + intToIp(broadcast - 1),
+            bcast: intToIp(broadcast),
+            cidr: newCIDR
+          });
+
+          current = broadcast + 1;
+        }
+
+        return results;
+      }
+
+      // ============================================================
+      // FLSM CALCULATOR
+      // ============================================================
+      function calculateFLSM(network, cidr, subnetCount) {
+        var ip = ipToInt(network);
+        if (!ip) throw new Error('Invalid network address');
+        if (cidr < 8 || cidr > 30) throw new Error('CIDR must be 8-30');
+
+        var bitsForSubnets = Math.ceil(Math.log2(subnetCount));
+        var newCIDR = cidr + bitsForSubnets;
+        
+        if (newCIDR > 30) throw new Error('Too many subnets requested');
+
+        var subnetSize = Math.pow(2, 32 - newCIDR);
+        var results = [];
+        var current = getNetworkAddress(ip, cidr);
+
+        for (var i = 0; i < subnetCount; i++) {
+          results.push({
+            idx: i + 1,
+            subnet: intToIp(current),
+            range: intToIp(current + 1) + ' - ' + intToIp(current + subnetSize - 2),
+            bcast: intToIp(current + subnetSize - 1)
+          });
+          current += subnetSize;
+        }
+
+        return results;
+      }
+
+      // ============================================================
+      // IPV6 SUBNETTING (BASIC)
+      // ============================================================
+      function ipv6Subnets(prefixStr, newPrefixLen) {
+        var parts = prefixStr.split('/');
+        var prefix = parts[0];
+        var oldLen = parseInt(parts[1]);
+        
+        if (isNaN(oldLen) || isNaN(newPrefixLen) || newPrefixLen <= oldLen) return [];
+        
+        var count = Math.min(Math.pow(2, newPrefixLen - oldLen), 8);
+        var blocks = prefix.split(':').filter(function(b) { return b !== ''; });
+        
+        while (blocks.length < 8) {
+          blocks.push('0');
+        }
+
+        var results = [];
+        for (var i = 0; i < count; i++) {
+          var modBlocks = blocks.slice();
+          modBlocks[3] = (parseInt(modBlocks[3] || '0', 16) + i).toString(16);
+          results.push({
+            idx: i,
+            net: modBlocks.join(':') + '/' + newPrefixLen
+          });
+        }
+
+        return results;
+      }
+
+      // ============================================================
+      // COPY BUTTON HELPER
+      // ============================================================
+      function createCopyChip(text) {
+        return '<span class="copy-chip" onclick="navigator.clipboard.writeText(\'' + text.replace(/'/g, "\\'") + '\')" title="Copy to clipboard">📋 Copy</span>';
+      }
+
+      // ============================================================
+      // TABLE RENDERERS
+      // ============================================================
+      function renderVLSMTable(data) {
+        var tbody = $('#vlsmTable tbody');
+        tbody.innerHTML = data.map(function(r) {
+          return '<tr>' +
+            '<td>' + r.name + '</td>' +
+            '<td>' + r.hosts + '</td>' +
+            '<td>' + r.subnet + ' ' + createCopyChip(r.subnet) + '</td>' +
+            '<td>' + r.range + ' ' + createCopyChip(r.range) + '</td>' +
+            '<td>' + r.bcast + '</td>' +
+            '<td>/' + r.cidr + '</td>' +
+          '</tr>';
+        }).join('');
+      }
+
+      function renderFLSMTable(data) {
+        var tbody = $('#flsmTable tbody');
+        tbody.innerHTML = data.map(function(r) {
+          return '<tr>' +
+            '<td>' + r.idx + '</td>' +
+            '<td>' + r.subnet + ' ' + createCopyChip(r.subnet) + '</td>' +
+            '<td>' + r.range + ' ' + createCopyChip(r.range) + '</td>' +
+            '<td>' + r.bcast + '</td>' +
+          '</tr>';
+        }).join('');
+      }
+
+      // ============================================================
+      // ERROR DISPLAY
+      // ============================================================
+      function showError(elementId, message) {
+        var el = $(elementId);
+        if (!el) return;
+        
+        if (message) {
+          el.innerHTML = '<div class="error-msg">⚠️ ' + message + '</div>';
+        } else {
+          el.innerHTML = '';
+        }
+      }
+
+      // ============================================================
+      // EVENT LISTENERS
+      // ============================================================
+      
+      // VLSM Calculate Button
+      $('#calcVlsmBtn').onclick = function() {
+        showError('#vlsmError', '');
+        
+        try {
+          var network = $('#vlsmNetwork').value.trim();
+          var cidr = parseInt($('#vlsmCidr').value);
+          var hostsStr = $('#vlsmHosts').value;
+          var hosts = hostsStr.split(',').map(function(h) {
+            return parseInt(h.trim());
+          }).filter(function(n) {
+            return !isNaN(n) && n > 0;
+          });
+
+          if (hosts.length === 0) throw new Error('Enter valid host counts (e.g., 50, 20, 10)');
+          
+          var results = calculateVLSM(network, cidr, hosts);
+          renderVLSMTable(results);
+          addToHistory('VLSM: ' + network + '/' + cidr + ' → ' + hosts.join(',') + ' hosts');
+          
+        } catch (e) {
+          showError('#vlsmError', e.message);
+        }
+      };
+
+      // FLSM Calculate Button
+      $('#calcFlsmBtn').onclick = function() {
+        showError('#flsmError', '');
+        
+        try {
+          var network = $('#flsmNetwork').value.trim();
+          var cidr = parseInt($('#flsmCidr').value);
+          var subnetCount = parseInt($('#flsmSubnets').value);
+          
+          if (isNaN(subnetCount) || subnetCount < 1) throw new Error('Subnet count must be ≥ 1');
+          
+          var results = calculateFLSM(network, cidr, subnetCount);
+          renderFLSMTable(results);
+          addToHistory('FLSM: ' + network + '/' + cidr + ' × ' + subnetCount);
+          
+        } catch (e) {
+          showError('#flsmError', e.message);
+        }
+      };
+
+      // IPv6 Generate Button
+      $('#calcIpv6Btn').onclick = function() {
+        var prefix = $('#ipv6Prefix').value.trim();
+        var newLen = parseInt($('#ipv6NewPrefix').value);
+        var results = ipv6Subnets(prefix, newLen);
+        
+        var tbody = $('#ipv6Table tbody');
+        tbody.innerHTML = results.map(function(r) {
+          return '<tr><td>' + r.idx + '</td><td>' + r.net + '</td></tr>';
+        }).join('');
+        
+        addToHistory('IPv6: ' + prefix + ' → /' + newLen);
+      };
+
+      // ============================================================
+      // CHEAT SHEET GENERATOR
+      // ============================================================
+      (function buildCheatSheet() {
+        var html = '';
+        for (var c = 8; c <= 32; c++) {
+          var mask = cidrToMask(c);
+          var wildcard = intToIp(~ipToInt(mask) >>> 0);
+          var hosts = Math.pow(2, 32 - c) - 2;
+          html += '<tr>' +
+            '<td>/' + c + '</td>' +
+            '<td>' + mask + '</td>' +
+            '<td>' + wildcard + '</td>' +
+            '<td>' + (hosts >= 0 ? hosts.toLocaleString() : '—') + '</td>' +
+          '</tr>';
+        }
+        $('#cheatSheetBody').innerHTML = html;
+      })();
+
+      // ============================================================
+      // QUICK TOOLS — CIDR CONVERTER
+      // ============================================================
+      $('#cidrInput').oninput = function() {
+        var value = this.value.trim();
+        var output = $('#cidrResult');
+        
+        if (value.startsWith('/')) {
+          var cidr = parseInt(value.slice(1));
+          if (!isNaN(cidr) && cidr >= 0 && cidr <= 32) {
+            output.textContent = 'Mask: ' + cidrToMask(cidr);
+            return;
+          }
+        } else if (value.includes('.')) {
+          var cidr = maskToCidr(value);
+          if (cidr !== null) {
+            output.textContent = 'CIDR: /' + cidr;
+            return;
+          }
+        }
+        
+        output.textContent = value ? 'Invalid format' : 'Enter a value above';
+      };
+
+      // ============================================================
+      // QUICK TOOLS — WILDCARD CALCULATOR
+      // ============================================================
+      $('#wildcardInput').oninput = function() {
+        var maskInt = ipToInt(this.value.trim());
+        var output = $('#wildcardResult');
+        
+        if (maskInt !== null) {
+          output.textContent = 'Wildcard: ' + intToIp(~maskInt >>> 0);
+        } else {
+          output.textContent = this.value.trim() ? 'Enter valid subnet mask' : 'Enter subnet mask';
+        }
+      };
+
+      // ============================================================
+      // SPA ROUTER
+      // ============================================================
+      var panels = {
+        dashboard: 'panel-dashboard',
+        ipv4: 'panel-ipv4',
+        ipv6: 'panel-ipv6',
+        cheatsheet: 'panel-cheatsheet'
+      };
+
+      function navigate(route) {
+        // Hide all panels
+        Object.values(panels).forEach(function(id) {
+          var el = document.getElementById(id);
+          if (el) el.classList.add('hidden-panel');
+        });
+
+        // Show target panel
+        var targetId = panels[route] || panels.dashboard;
+        var target = document.getElementById(targetId);
+        if (target) target.classList.remove('hidden-panel');
+
+        // Update active nav pill
+        document.querySelectorAll('#mainNav .nav-pill').forEach(function(btn) {
+          btn.classList.toggle('active', btn.dataset.route === route);
+        });
+      }
+
+      // Navigation click handler
+      document.getElementById('mainNav').addEventListener('click', function(e) {
+        var btn = e.target.closest('button');
+        if (!btn || !btn.dataset.route) return;
+        
+        var route = btn.dataset.route;
+        navigate(route);
+        window.history.pushState({ route: route }, '', '#' + route);
+      });
+
+      // Browser back/forward
+      window.addEventListener('popstate', function(e) {
+        var route = (e.state && e.state.route) || 'dashboard';
+        navigate(route);
+      });
+
+      // ============================================================
+      // INITIALIZATION
+      // ============================================================
+      renderHistory();
+      
+      var initialRoute = window.location.hash.replace('#', '') || 'dashboard';
+      navigate(initialRoute);
+      
+      // Trigger initial quick tool displays
+      $('#cidrInput').dispatchEvent(new Event('input'));
+      $('#wildcardInput').dispatchEvent(new Event('input'));
+
+      // ============================================================
+      // FLOATING PARTICLES BACKGROUND (CANVAS)
+      // ============================================================
+      var canvas = document.getElementById('particlesBg');
+      var ctx = canvas.getContext('2d');
+      var width, height;
+      var particles = [];
+
+      function FloatParticle() {
+        this.reset();
+        this.y = Math.random() * height;
+      }
+
+      FloatParticle.prototype.reset = function() {
+        this.x = Math.random() * width;
+        this.y = height + 15;
+        this.size = Math.random() * 2.2 + 0.7;
+        this.speed = Math.random() * 0.55 + 0.18;
+        this.opacity = Math.random() * 0.45 + 0.18;
+        this.wobble = Math.random() * 0.4 - 0.2;
+      };
+
+      FloatParticle.prototype.update = function() {
+        this.y -= this.speed;
+        this.x += this.wobble * 0.3;
+        
+        if (this.y < -15) {
+          this.reset();
+        }
+        if (this.x < -10) this.x = width + 10;
+        if (this.x > width + 10) this.x = -10;
+      };
+
+      FloatParticle.prototype.draw = function(ctx) {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        
+        // Amethyst glow gradient
+        var gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size * 3);
+        gradient.addColorStop(0, 'rgba(168, 85, 247, ' + this.opacity + ')');
+        gradient.addColorStop(0.5, 'rgba(139, 92, 246, ' + (this.opacity * 0.6) + ')');
+        gradient.addColorStop(1, 'rgba(192, 132, 252, 0)');
+        
+        ctx.fillStyle = gradient;
+        ctx.shadowColor = 'rgba(168, 85, 247, 0.5)';
+        ctx.shadowBlur = 8;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      };
+
+      function resizeCanvas() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width;
+        canvas.height = height;
+      }
+
+      function initParticles(count) {
+        particles = [];
+        for (var i = 0; i < count; i++) {
+          var p = new FloatParticle();
+          p.y = Math.random() * height;
+          particles.push(p);
+        }
+      }
+
+      function animateParticles() {
+        ctx.clearRect(0, 0, width, height);
+        
+        for (var i = 0; i < particles.length; i++) {
+          particles[i].update();
+          particles[i].draw(ctx);
+        }
+        
+        requestAnimationFrame(animateParticles);
+      }
+
+      // Initialize canvas and particles
+      window.addEventListener('resize', function() {
+        resizeCanvas();
+        initParticles(70);
+      });
+
+      resizeCanvas();
+      initParticles(70);
+      animateParticles();
+
+    })();
+  </script>
+</body>
+</html>
