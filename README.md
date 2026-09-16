@@ -17,7 +17,7 @@ Vous entrez un réseau, vous indiquez vos besoins, et l'outil vous rend un déco
 Tout fonctionne dans votre navigateur. Pas de serveur, pas d'inscription, pas de données qui partent ailleurs. Vous ouvrez, vous calculez, vous fermez.
 
 ---
-
+<!-- 
 ## 📸 Un aperçu
 
 <div align="center">
@@ -42,7 +42,7 @@ Tout fonctionne dans votre navigateur. Pas de serveur, pas d'inscription, pas de
   <img src="https://github.com/mohamed005cheikh-rgb/sm-mc88/raw/main/images/Sr2.gif" alt="Consulter la cheat sheet CIDR" width="100%" />
 </div>
 
----
+----->
 
 ## ✨ Ce que vous trouverez
 
