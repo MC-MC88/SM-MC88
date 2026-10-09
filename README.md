@@ -1,127 +1,203 @@
+<h2 id="français">🇫🇷 Version française</h2>
+
 <div align="center">
 
-# 🌐 Subnetting Master — MC88
+# 🎯 Subnetting Master — MC88
 
-**Calculer des sous-réseaux, sans jamais se tromper.**
+**Calculateur VLSM, IPv4 et IPv6 en ligne.**
 
 </div>
 
+🌍 **Langues :** [Français](#français) · [English](#english)
+
 ---
+
+> **En bref** — Un outil web pour calculer des sous-réseaux VLSM, FLSM et IPv6, avec table de référence CIDR.
+> 
+> **VLSM · FLSM · IPv6 · Cheatsheet**
+
+<!-- 
+## 📸 Aperçu
+
+<div align="center">
+  <img src="https://github.com/mohamed005cheikh-rgb/[REPO]/raw/main/images/Sc1.png" alt="[Description]" width="100%" />
+</div>
+
+---
+
+🔗 **Démo en ligne :** [https://...](https://...)
+📦 **Code source :** [https://github.com/mohamed005cheikh-rgb/[REPO]](https://github.com/mohamed005cheikh-rgb/[REPO])
+-->
 
 ## 👋 Bienvenue
 
-Subnetting Master est un petit atelier pour ceux qui travaillent avec des adresses IP au quotidien.
-
-Vous entrez un réseau, vous indiquez vos besoins, et l'outil vous rend un découpage propre — chaque sous-réseau avec son Network ID, sa plage utilisable, son adresse de broadcast, son masque. VLSM, FLSM, IPv6, tableau CIDR complet, conversion masque ↔ wildcard : tout est là, au même endroit, dans une interface calme et soignée.
-
-Tout fonctionne dans votre navigateur. Pas de serveur, pas d'inscription, pas de données qui partent ailleurs. Vous ouvrez, vous calculez, vous fermez.
+Subnetting Master est un outil web pour ingénieurs réseau et étudiants. Il calcule des sous-réseaux VLSM, FLSM et IPv6, affiche les plages utilisables, les adresses de broadcast, et propose une table de référence CIDR complète. Tout fonctionne dans le navigateur. Aucune donnée n'est envoyée.
 
 ---
-<!-- 
-## 📸 Un aperçu
-
-<div align="center">
-  <img src="https://github.com/mohamed005cheikh-rgb/sm-mc88/raw/main/images/Sc1.png" alt="Calculateur VLSM" width="100%" />
-</div>
-
-<br />
-
-<div align="center">
-  <img src="https://github.com/mohamed005cheikh-rgb/sm-mc88/raw/main/images/Sc2.png" alt="Calculateur FLSM et IPv6" width="100%" />
-</div>
-
-<br />
-
-<div align="center">
-  <img src="https://github.com/mohamed005cheikh-rgb/sm-mc88/raw/main/images/Sr1.gif" alt="Découper un réseau en VLSM" width="100%" />
-</div>
-
-<br />
-
-<div align="center">
-  <img src="https://github.com/mohamed005cheikh-rgb/sm-mc88/raw/main/images/Sr2.gif" alt="Consulter la cheat sheet CIDR" width="100%" />
-</div>
-
------>
 
 ## ✨ Ce que vous trouverez
 
-**VLSM — découper selon vos besoins réels.**  
-Vous indiquez votre réseau de base, son CIDR, et la liste de vos besoins en hôtes (par exemple `100, 50, 25`). L'outil trie les demandes de la plus grande à la plus petite, calcule les bits nécessaires pour chacune, et les place bout à bout sans gaspiller une seule adresse. À la fin, vous avez un plan de sous-réseaux prêt à déployer.
+**Calculateur VLSM.**  
+Entrez un réseau, un CIDR, et une liste de besoins en hôtes. L'outil trie les besoins du plus grand au plus petit, alloue les sous-réseaux dans l'ordre, et affiche l'ID réseau, la plage utilisable, le broadcast et le CIDR final.
 
-**FLSM — découper en parts égales.**  
-Quand vous voulez des sous-réseaux de taille identique, vous entrez simplement le nombre de blocs souhaités. L'outil s'occupe du reste — CIDR ajusté, chaque subnet avec sa plage complète, du premier au dernier.
+**Calculateur FLSM.**  
+Entrez un réseau, un CIDR et un nombre de sous-réseaux. L'outil calcule la taille de chaque sous-réseau et affiche la liste complète avec ID, plage et broadcast.
 
-**IPv6 — générer des sous-réseaux à partir d'un préfixe.**  
-Donnez un préfixe IPv6 (par exemple `2001:db8::/32`) et un nouveau préfixe cible. L'outil vous rend jusqu'à huit sous-réseaux prêts à l'emploi.
+**Générateur IPv6.**  
+Entrez un préfixe IPv6 et un nouveau préfixe. L'outil génère jusqu'à huit sous-réseaux avec les adresses réseau correspondantes.
 
-**Cheat sheet CIDR — la référence toujours sous la main.**  
-Un tableau complet, de `/8` à `/32` : masque de sous-réseau, wildcard, nombre d'hôtes utilisables. Plus besoin de retenir — il suffit de regarder.
+**Table de référence CIDR.**  
+Du /8 au /32, avec masque de sous-réseau, masque wildcard et nombre d'hôtes utilisables. Utile pour vérifier rapidement une valeur.
 
-**Convertisseur CIDR ↔ Masque.**  
-Vous entrez l'un, vous obtenez l'autre, instantanément. Dans les deux sens.
+**Outils rapides.**  
+Convertisseur CIDR ↔ masque, et calculateur de masque wildcard. Les deux se mettent à jour en direct pendant la saisie.
 
-**Calculateur de Wildcard Mask.**  
-Un masque de sous-réseau entre, un wildcard sort — précieux pour les ACL et les configurations de routeurs.
-
-**Copier d'un seul geste.**  
-Chaque valeur affichée a son petit bouton de copie. Un clic, et c'est dans votre presse-papiers, prêt à coller dans votre terminal ou votre documentation.
-
-**Un historique qui se souvient.**  
-Vos huit derniers calculs restent dans la barre latérale. Vous pouvez y revenir à tout moment — même après avoir fermé la page.
+**Historique local.**  
+Vos huit dernières conversions restent dans la barre latérale. Elles sont conservées dans votre navigateur.
 
 ---
 
 ## 🧭 Comment ça marche
 
-Trois étapes, toujours les mêmes.
-
-**1. Choisissez votre calculateur.**  
-En haut de la page, quatre onglets : **VLSM**, **IPv4** (FLSM), **IPv6**, et **Cheatsheet**. Selon ce que vous voulez faire, vous basculez d'un onglet à l'autre — chacun garde sa saisie.
+**1. Choisissez un onglet.**  
+VLSM pour l'allocation optimisée, IPv4 pour le découpage égal, IPv6 pour les préfixes, Cheatsheet pour la table de référence.
 
 **2. Entrez vos paramètres.**  
-Adresse réseau, CIDR de base, liste d'hôtes ou nombre de sous-réseaux — les champs sont pré-remplis avec des exemples pour vous guider. Modifiez ce qu'il faut, ou repartez de zéro.
+Le réseau de base, le CIDR, et selon l'outil : les besoins en hôtes, le nombre de sous-réseaux, ou le nouveau préfixe.
 
-**3. Lancez le calcul.**  
-Un clic sur **Calculate**, et le tableau apparaît. Vous pouvez le lire, copier chaque valeur, ou simplement vous en inspirer. Le calcul est enregistré dans l'historique, prêt à être comparé au suivant.
+**3. Cliquez sur Calculer.**  
+Les résultats s'affichent dans un tableau. Chaque valeur peut être copiée d'un clic.
 
-C'est tout. L'outil ne vous demande rien, ne vous impose rien, et ne s'inquiète jamais de ce que vous faites avec les résultats.
+**4. Consultez l'historique.**  
+Les dernières opérations sont listées dans la barre latérale. Cliquez pour les rejouer.
+
+C'est tout. Pas d'inscription, pas de serveur, pas de tracking.
 
 ---
 
 ## 🛠️ Petits coups de main
 
-**L'adresse est refusée ?**  
-Vérifiez qu'elle est bien au format `xxx.xxx.xxx.xxx`, chaque octet entre 0 et 255.
+**Le calcul VLSM refuse mes valeurs ?**  
+Vérifiez que le CIDR est entre 8 et 30, et que la somme des hôtes demandés tient dans le réseau de base. L'outil affiche un message si l'allocation dépasse la frontière.
 
-**Le CIDR est refusé ?**  
-Pour VLSM et FLSM, le préfixe doit être entre `/8` et `/30`. En dessous, on n'est plus dans du sous-réseau. Au-dessus, il ne reste plus assez d'adresses pour deux hôtes.
+**Le calcul FLSM échoue ?**  
+Vérifiez que le nombre de sous-réseaux est une puissance de 2 compatible avec le CIDR de base. L'outil refuse au-delà de /30.
 
-**« Exceeded base network boundary » ?**  
-La somme de vos sous-réseaux dépasse la taille du réseau de base. Réduisez les besoins en hôtes, ou agrandissez le réseau de départ (par exemple, passez de `/24` à `/23`).
-
-**« Cannot fit X hosts in /Y » ?**  
-Un de vos sous-réseaux demandés est plus grand que le réseau de base lui-même. Réduisez la demande, ou changez de réseau de base.
-
-**Le bouton Copy ne répond pas ?**  
-Autorisez l'accès au presse-papiers dans les réglages du navigateur. En attendant, la sélection manuelle fonctionne très bien.
+**Le générateur IPv6 ne renvoie rien ?**  
+Le nouveau préfixe doit être strictement supérieur à l'ancien. Par exemple, /32 → /48 fonctionne, mais /48 → /32 non.
 
 **L'historique disparaît ?**  
-En navigation privée, le stockage local est désactivé — c'est normal. Utilisez une fenêtre normale pour le conserver.
+En navigation privée, le stockage local est désactivé. En fenêtre normale, l'historique reste tant que vous ne videz pas le cache.
+
+---
+
+<br /><br /><br />
+
+<h2 id="english">🇬🇧 English version</h2>
+
+<div align="center">
+
+# 🎯 Subnetting Master — MC88
+
+**VLSM, IPv4 and IPv6 calculator online.**
+
+</div>
+
+🌍 **Languages:** [Français](#français) · [English](#english)
+
+---
+
+> **In short** — A web tool to compute VLSM, FLSM and IPv6 subnets, with a CIDR reference table.
+> 
+> **VLSM · FLSM · IPv6 · Cheatsheet**
+
+<!-- 
+## 📸 Preview
+
+<div align="center">
+  <img src="https://github.com/mohamed005cheikh-rgb/[REPO]/raw/main/images/Sc1.png" alt="[Description]" width="100%" />
+</div>
+
+---
+
+🔗 **Live demo:** [https://...](https://...)
+📦 **Source code:** [https://github.com/mohamed005cheikh-rgb/[REPO]](https://github.com/mohamed005cheikh-rgb/[REPO])
+-->
+
+## 👋 Welcome
+
+Subnetting Master is a web tool for network engineers and students. It computes VLSM, FLSM and IPv6 subnets, shows usable ranges, broadcast addresses, and offers a full CIDR reference table. Everything runs in the browser. No data is sent.
+
+---
+
+## ✨ What you'll find
+
+**VLSM calculator.**  
+Enter a network, a CIDR, and a list of host requirements. The tool sorts requirements from largest to smallest, allocates subnets in order, and shows the network ID, usable range, broadcast and final CIDR.
+
+**FLSM calculator.**  
+Enter a network, a CIDR and a number of subnets. The tool computes each subnet size and shows the full list with ID, range and broadcast.
+
+**IPv6 generator.**  
+Enter an IPv6 prefix and a new prefix. The tool generates up to eight subnets with their network addresses.
+
+**CIDR reference table.**  
+From /8 to /32, with subnet mask, wildcard mask and usable host count. Useful to quickly check a value.
+
+**Quick tools.**  
+CIDR ↔ mask converter, and wildcard mask calculator. Both update live as you type.
+
+**Local history.**  
+Your last eight conversions stay in the sidebar. They are kept in your browser.
+
+---
+
+## 🧭 How it works
+
+**1. Pick a tab.**  
+VLSM for optimized allocation, IPv4 for equal splitting, IPv6 for prefixes, Cheatsheet for the reference table.
+
+**2. Enter your parameters.**  
+The base network, the CIDR, and depending on the tool: host requirements, subnet count, or the new prefix.
+
+**3. Click Compute.**  
+Results appear in a table. Each value can be copied with one click.
+
+**4. Check the history.**  
+The last operations are listed in the sidebar. Click to replay them.
+
+That's it. No signup, no server, no tracking.
+
+---
+
+## 🛠️ A little help
+
+**The VLSM computation rejects my values?**  
+Check that the CIDR is between 8 and 30, and that the sum of requested hosts fits in the base network. The tool shows a message if the allocation exceeds the boundary.
+
+**The FLSM computation fails?**  
+Check that the subnet count is a power of 2 compatible with the base CIDR. The tool refuses beyond /30.
+
+**The IPv6 generator returns nothing?**  
+The new prefix must be strictly greater than the old one. For example, /32 → /48 works, but /48 → /32 does not.
+
+**The history disappears?**  
+In private browsing, local storage is disabled. In a normal window, history stays until you clear the cache.
 
 ---
 
 <div align="center">
 
-### 📞 Une question, une idée ?
+### 📞 Une question, une idée ? / A question, an idea?
 
 [![Email](https://img.shields.io/badge/Email-mohamed005cheikh@gmail.com-d14836?style=flat-square&logo=gmail&logoColor=white)](mailto:mohamed005cheikh@gmail.com)
 [![WhatsApp](https://img.shields.io/badge/WhatsApp-+222_30_72_64_75-25D366?style=flat-square&logo=whatsapp&logoColor=white)](https://wa.me/22230726475)
+[![GitHub](https://img.shields.io/badge/GitHub-MC--88-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/MC-MC88)
 
 <br />
 
-*Bon calcul.*
+*Calculez. / Compute.*
 
-<sub>© 2026 Mohamed Cheikh — MC88</sub>
+<sub>MIT License · © 2026 Mohamed Cheikh — MC88</sub>
 
 </div>
